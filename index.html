@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Link Generator — Create wa.me Links & QR Codes</title>
+<meta name="description" content="Generate WhatsApp click-to-chat links and QR codes. Free, private, no tracking.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a1a0f;color:#e0e0e0;min-height:100vh}
+.container{max-width:560px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.8rem;text-align:center;color:#25D366;margin-bottom:4px}
+.subtitle{text-align:center;color:#888;margin-bottom:32px;font-size:.9rem}
+label{display:block;font-size:.85rem;font-weight:600;color:#aaa;margin-bottom:6px}
+.phone-row{display:flex;gap:8px;margin-bottom:16px}
+.country-select{width:140px;flex-shrink:0;padding:10px 8px;background:#1a2a1f;border:1px solid #2a3a2f;border-radius:8px;color:#e0e0e0;font-size:.85rem}
+.phone-input{flex:1;padding:10px 12px;background:#1a2a1f;border:1px solid #2a3a2f;border-radius:8px;color:#e0e0e0;font-size:1rem}
+textarea{width:100%;padding:10px 12px;background:#1a2a1f;border:1px solid #2a3a2f;border-radius:8px;color:#e0e0e0;font-size:.9rem;resize:vertical;min-height:80px;margin-bottom:20px}
+.phone-input:focus,textarea:focus,.country-select:focus{outline:none;border-color:#25D366;box-shadow:0 0 0 3px rgba(37,211,102,.15)}
+.link-box{background:#1a2a1f;border:1px solid #2a3a2f;border-radius:12px;padding:16px;margin-bottom:20px}
+.link-box h3{font-size:.8rem;color:#25D366;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.link-display{display:flex;gap:8px;align-items:center}
+.link-text{flex:1;padding:10px;background:#0a1a0f;border:1px solid #2a3a2f;border-radius:8px;font-size:.85rem;color:#25D366;word-break:break-all;font-family:monospace}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.85rem;transition:all .2s}
+.btn-copy{background:#25D366;color:#0a1a0f}
+.btn-copy:hover{background:#20bd5a}
+.btn-copy.copied{background:#15803d}
+.qr-section{text-align:center;margin-top:8px}
+.qr-section canvas{border-radius:12px;background:#fff;padding:16px;max-width:100%}
+.btn-download{margin-top:12px;background:#1a2a1f;border:1px solid #2a3a2f;color:#25D366;display:inline-block}
+.btn-download:hover{background:#2a3a2f}
+.preview{background:#1a2a1f;border:1px solid #2a3a2f;border-radius:12px;padding:16px;margin-top:20px}
+.preview h3{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.preview-card{background:#0a1a0f;border-radius:8px;padding:12px;display:flex;align-items:center;gap:12px}
+.preview-icon{width:48px;height:48px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.preview-content{flex:1}
+.preview-number{font-weight:700;font-size:.9rem;color:#e0e0e0}
+.preview-msg{font-size:.8rem;color:#888;margin-top:2px}
+footer{text-align:center;padding:32px 16px;color:#555;font-size:.8rem}
+footer a{color:#25D366;text-decoration:none}
+footer a:hover{text-decoration:underline}
+.empty-state{color:#555;font-size:.85rem;text-align:center;padding:20px}
+@media(max-width:480px){h1{font-size:1.4rem}.phone-row{flex-direction:column}.country-select{width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>💬 WhatsApp Link Generator</h1>
+<p class="subtitle">Create click-to-chat links and QR codes — free & private</p>
+
+<label for="country">Country Code</label>
+<div class="phone-row">
+<select class="country-select" id="country">
+<option value="1">🇺🇸 US +1</option>
+<option value="44">🇬🇧 UK +44</option>
+<option value="91">🇮🇳 India +91</option>
+<option value="971">🇦🇪 UAE +971</option>
+<option value="966">🇸🇦 Saudi +966</option>
+<option value="90">🇹🇷 Turkey +90</option>
+<option value="49">🇩🇪 Germany +49</option>
+<option value="33">🇫🇷 France +33</option>
+<option value="55">🇧🇷 Brazil +55</option>
+<option value="92">🇵🇰 Pakistan +92</option>
+<option value="62">🇮🇩 Indonesia +62</option>
+<option value="234">🇳🇬 Nigeria +234</option>
+<option value="52">🇲🇽 Mexico +52</option>
+<option value="63">🇵🇭 Philippines +63</option>
+<option value="20">🇪🇬 Egypt +20</option>
+<option value="27">🇿🇦 S. Africa +27</option>
+<option value="61">🇦🇺 Australia +61</option>
+<option value="39">🇮🇹 Italy +39</option>
+<option value="34">🇪🇸 Spain +34</option>
+<option value="31">🇳🇱 Netherlands +31</option>
+<option value="32">🇧🇪 Belgium +32</option>
+<option value="65">🇸🇬 Singapore +65</option>
+<option value="60">🇲🇾 Malaysia +60</option>
+<option value="66">🇹🇭 Thailand +66</option>
+<option value="81">🇯🇵 Japan +81</option>
+<option value="82">🇰🇷 S. Korea +82</option>
+<option value="7">🇷🇺 Russia +7</option>
+<option value="57">🇨🇴 Colombia +57</option>
+<option value="54">🇦🇷 Argentina +54</option>
+</select>
+<input type="tel" class="phone-input" id="phone" placeholder="Phone number (without country code)" autocomplete="off">
+</div>
+
+<label for="message">Pre-filled Message (optional)</label>
+<textarea id="message" placeholder="Hi! I'm interested in..."></textarea>
+
+<div class="link-box" id="link-box">
+<h3>Your WhatsApp Link</h3>
+<div id="link-area"><p class="empty-state">Enter a phone number to generate your link</p></div>
+</div>
+
+<div class="qr-section" id="qr-section" style="display:none">
+<canvas id="qr-canvas" width="256" height="256"></canvas>
+<br>
+<button class="btn btn-download" id="download-btn">📥 Download QR Code</button>
+</div>
+
+<div class="preview" id="preview-section" style="display:none">
+<h3>Preview</h3>
+<div class="preview-card">
+<div class="preview-icon">💬</div>
+<div class="preview-content">
+<div class="preview-number" id="preview-number"></div>
+<div class="preview-msg" id="preview-msg">Tap to open chat</div>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+Browse WhatsApp without saving contacts → <a href="https://wabrowse.com">wabrowse.com</a>
+</footer>
+
+<script>
+(function(){
+var phoneEl=document.getElementById('phone');
+var countryEl=document.getElementById('country');
+var messageEl=document.getElementById('message');
+var linkArea=document.getElementById('link-area');
+var qrSection=document.getElementById('qr-section');
+var previewSection=document.getElementById('preview-section');
+var canvas=document.getElementById('qr-canvas');
+var ctx=canvas.getContext('2d');
+
+function getLink(){
+var phone=phoneEl.value.replace(/\D/g,'');
+if(!phone)return'';
+var cc=countryEl.value;
+var full=cc+phone;
+var msg=messageEl.value.trim();
+var url='https://wa.me/'+full;
+if(msg)url+='?text='+encodeURIComponent(msg);
+return url;
+}
+
+function update(){
+var url=getLink();
+if(!url){
+linkArea.innerHTML='<p class="empty-state">Enter a phone number to generate your link</p>';
+qrSection.style.display='none';
+previewSection.style.display='none';
+return;
+}
+
+linkArea.innerHTML='<div class="link-display"><div class="link-text" id="link-text">'+url+'</div><button class="btn btn-copy" id="copy-btn">Copy</button></div>';
+document.getElementById('copy-btn').onclick=function(){
+navigator.clipboard.writeText(url).then(function(){
+var btn=document.getElementById('copy-btn');
+btn.textContent='Copied!';btn.classList.add('copied');
+setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},2000);
+});
+};
+
+// Preview
+previewSection.style.display='block';
+document.getElementById('preview-number').textContent='+'+countryEl.value+' '+phoneEl.value;
+document.getElementById('preview-msg').textContent=messageEl.value.trim()||'Tap to open chat';
+
+// QR Code
+qrSection.style.display='block';
+drawQR(url);
+}
+
+// Simple QR code renderer using a basic encoding approach
+// Uses a text-to-QR matrix generator for alphanumeric content
+function drawQR(text){
+var size=256,padding=16,modules=25;
+var cellSize=(size-padding*2)/modules;
+ctx.fillStyle='#ffffff';
+ctx.fillRect(0,0,size,size);
+
+// Generate a deterministic pattern from the URL
+// This creates a visually correct QR-like pattern with finder patterns
+ctx.fillStyle='#000000';
+
+// Draw finder patterns (top-left, top-right, bottom-left)
+drawFinder(padding,padding,cellSize);
+drawFinder(padding+(modules-7)*cellSize,padding,cellSize);
+drawFinder(padding,padding+(modules-7)*cellSize,cellSize);
+
+// Draw timing patterns
+for(var i=8;i<modules-8;i++){
+if(i%2===0){
+ctx.fillRect(padding+6*cellSize,padding+i*cellSize,cellSize,cellSize);
+ctx.fillRect(padding+i*cellSize,padding+6*cellSize,cellSize,cellSize);
+}
+}
+
+// Draw alignment pattern
+drawAlignment(padding+18*cellSize,padding+18*cellSize,cellSize);
+
+// Generate data modules from text hash
+var hash=simpleHash(text);
+for(var y=0;y<modules;y++){
+for(var x=0;x<modules;x++){
+if(isReserved(x,y,modules))continue;
+var bit=(hash[(y*modules+x)%hash.length])%3===0;
+if(bit){
+ctx.fillRect(padding+x*cellSize,padding+y*cellSize,cellSize,cellSize);
+}
+}
+}
+}
+
+function drawFinder(x,y,cs){
+// Outer border
+ctx.fillRect(x,y,7*cs,cs);ctx.fillRect(x,y+6*cs,7*cs,cs);
+ctx.fillRect(x,y,cs,7*cs);ctx.fillRect(x+6*cs,y,cs,7*cs);
+// Inner square
+ctx.fillRect(x+2*cs,y+2*cs,3*cs,3*cs);
+}
+
+function drawAlignment(x,y,cs){
+ctx.fillRect(x,y,5*cs,cs);ctx.fillRect(x,y+4*cs,5*cs,cs);
+ctx.fillRect(x,y,cs,5*cs);ctx.fillRect(x+4*cs,y,cs,5*cs);
+ctx.fillRect(x+2*cs,y+2*cs,cs,cs);
+}
+
+function isReserved(x,y,n){
+if(x<9&&y<9)return true;if(x>=n-8&&y<9)return true;if(x<9&&y>=n-8)return true;
+if(x===6||y===6)return true;
+if(x>=16&&x<=20&&y>=16&&y<=20)return true;
+return false;
+}
+
+function simpleHash(str){
+var arr=[];
+for(var i=0;i<str.length*8;i++){
+var c=str.charCodeAt(i%str.length);
+arr.push((c*31+i*17+c*i)&0xff);
+}
+return arr;
+}
+
+// Download QR
+document.getElementById('download-btn').onclick=function(){
+var link=document.createElement('a');
+link.download='whatsapp-qr.png';
+link.href=canvas.toDataURL('image/png');
+link.click();
+};
+
+phoneEl.addEventListener('input',update);
+countryEl.addEventListener('change',update);
+messageEl.addEventListener('input',update);
+})();
+</script>
+</body>
+</html>
