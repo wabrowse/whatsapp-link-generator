@@ -64,6 +64,66 @@ The country code is included without the `+` sign. The phone number has no space
 
 This tool is built by [wabrowse.com](https://wabrowse.com) — browse and message WhatsApp contacts without saving them to your phone.
 
+---
+
+## npm Package: `whatsapp-chatlink`
+
+This repo also ships an npm package for generating WhatsApp links programmatically. Zero dependencies.
+
+### Install
+
+```bash
+npm install whatsapp-chatlink
+```
+
+### Usage
+
+```js
+// ESM
+import { waLink } from 'whatsapp-chatlink';
+
+// CJS
+const { waLink } = require('whatsapp-chatlink');
+
+// Generate a wa.me link
+waLink({ phone: '+971501234567', message: 'Hello!' });
+// → 'https://wa.me/971501234567?text=Hello!'
+
+// Auto-clean phone number with country code
+waLink({ phone: '(555) 123-4567', countryCode: '1', message: 'Hi' });
+// → 'https://wa.me/15551234567?text=Hi'
+
+// Just a link, no message
+waLink({ phone: '+905321234567' });
+// → 'https://wa.me/905321234567'
+
+// Validate a phone number
+waLink.validate('+971501234567'); // → true
+waLink.validate('abc');           // → false
+```
+
+### API
+
+#### `waLink(options): string`
+
+| Option       | Type     | Required | Description                                      |
+|--------------|----------|----------|--------------------------------------------------|
+| `phone`      | `string` | Yes      | Phone number (can include +, spaces, dashes, etc) |
+| `countryCode`| `string` | No       | Country code without + (prepended if phone has no +) |
+| `message`    | `string` | No       | Pre-filled message (URL-encoded automatically)    |
+
+#### `waLink.validate(phone): boolean`
+
+Returns `true` if the phone string contains 7-15 digits (E.164 range).
+
+### Features
+
+- Zero runtime dependencies
+- TypeScript source with full type declarations
+- Dual ESM + CJS support
+- Phone number auto-cleaning (strips spaces, dashes, parentheses, dots)
+- Country code handling
+
 ## License
 
 MIT

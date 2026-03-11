@@ -1,0 +1,7 @@
+test/
+scripts/
+tsconfig.json
+.git/
+.gitignore
+index.html
+node_modules/
